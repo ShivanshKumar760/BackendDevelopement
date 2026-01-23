@@ -1,0 +1,16 @@
+{
+  "name": "onlinejudge",
+  "module": "index.js ",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "mongoose": "^9.1.5"
+  }
+}
