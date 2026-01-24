@@ -1,0 +1,264 @@
+{
+  "info": {
+    "name": "Express.js Online Judge API",
+    "description": "API testing collection for Express.js Online Judge backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/api/judge/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "judge", "health"]
+        },
+        "description": "Check if the judge server is running"
+      },
+      "response": []
+    },
+    {
+      "name": "Root Endpoint",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": [""]
+        },
+        "description": "Get API information"
+      },
+      "response": []
+    },
+    {
+      "name": "Submit Code - Task 1 (Basics - Express Server) ✓ PASS",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"projectType\": \"basics\",\n  \"taskId\": 1,\n  \"code\": \"import express from 'express';\\n\\nconst app = express();\\n\\napp.get('/', (req, res) => {\\n  res.json({ message: 'Hello Express!' });\\n});\\n\\napp.get('/health', (req, res) => {\\n  res.json({ status: 'OK' });\\n});\\n\\nexport default app;\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3001/api/judge/submit",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "judge", "submit"]
+        },
+        "description": "Submit a PASSING solution for Task 1 - Basic Express Server"
+      },
+      "response": []
+    },
+    {
+      "name": "Submit Code - Task 1 (Basics) ✗ FAIL",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"projectType\": \"basics\",\n  \"taskId\": 1,\n  \"code\": \"const app = express();\\n\\napp.get('/', (req, res) => {\\n  res.send('hello');\\n});\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3001/api/judge/submit",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "judge", "submit"]
+        },
+        "description": "Submit a FAILING solution (missing import and export)"
+      },
+      "response": []
+    },
+    {
+      "name": "Submit Code - Task 2 (Route Parameters) ✓ PASS",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"projectType\": \"basics\",\n  \"taskId\": 2,\n  \"code\": \"import express from 'express';\\nconst app = express();\\n\\napp.get('/api/users/:id', (req, res) => {\\n  res.json({ userId: req.params.id });\\n});\\n\\napp.get('/api/products/:category/:productId', (req, res) => {\\n  res.json({ \\n    category: req.params.category,\\n    productId: req.params.productId\\n  });\\n});\\n\\nexport default app;\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3001/api/judge/submit",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "judge", "submit"]
+        },
+        "description": "Submit a PASSING solution for Task 2 - Route Parameters"
+      },
+      "response": []
+    },
+    {
+      "name": "Submit Code - Task 3 (Request Body) ✓ PASS",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"projectType\": \"basics\",\n  \"taskId\": 3,\n  \"code\": \"import express from 'express';\\nconst app = express();\\n\\napp.use(express.json());\\n\\napp.post('/api/users', (req, res) => {\\n  const { name, email } = req.body;\\n  res.json({ id: 1, name, email });\\n});\\n\\napp.post('/api/data', (req, res) => {\\n  res.json({ received: true, data: req.body });\\n});\\n\\nexport default app;\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3001/api/judge/submit",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "judge", "submit"]
+        },
+        "description": "Submit a PASSING solution for Task 3 - Request Body Parsing"
+      },
+      "response": []
+    },
+    {
+      "name": "Submit Code - Task 4 (Middleware) ✓ PASS",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"projectType\": \"basics\",\n  \"taskId\": 4,\n  \"code\": \"import express from 'express';\\nconst app = express();\\n\\napp.use(express.json());\\n\\nconst logger = (req, res, next) => {\\n  req.timestamp = new Date();\\n  next();\\n};\\n\\nconst authMiddleware = (req, res, next) => {\\n  const apiKey = req.header('x-api-key');\\n  if (apiKey === 'secret123') {\\n    next();\\n  } else {\\n    res.status(401).json({ error: 'Unauthorized' });\\n  }\\n};\\n\\napp.use(logger);\\n\\napp.get('/api/protected', authMiddleware, (req, res) => {\\n  res.json({ message: 'Access granted', timestamp: req.timestamp });\\n});\\n\\nexport default app;\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3001/api/judge/submit",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "judge", "submit"]
+        },
+        "description": "Submit a PASSING solution for Task 4 - Custom Middleware"
+      },
+      "response": []
+    },
+    {
+      "name": "Submit Code - Database Task 1 (In-Memory CRUD) ✓ PASS",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"projectType\": \"database\",\n  \"taskId\": 1,\n  \"code\": \"import express from 'express';\\nconst app = express();\\n\\napp.use(express.json());\\n\\nlet items = [];\\nlet nextId = 1;\\n\\napp.post('/api/items', (req, res) => {\\n  const item = { id: nextId++, name: req.body.name };\\n  items.push(item);\\n  res.json(item);\\n});\\n\\napp.get('/api/items', (req, res) => {\\n  res.json(items);\\n});\\n\\napp.get('/api/items/:id', (req, res) => {\\n  const item = items.find(i => i.id === parseInt(req.params.id));\\n  if (item) {\\n    res.json(item);\\n  } else {\\n    res.status(404).json({ error: 'Not found' });\\n  }\\n});\\n\\napp.put('/api/items/:id', (req, res) => {\\n  const item = items.find(i => i.id === parseInt(req.params.id));\\n  if (item) {\\n    item.name = req.body.name;\\n    res.json(item);\\n  } else {\\n    res.status(404).json({ error: 'Not found' });\\n  }\\n});\\n\\napp.delete('/api/items/:id', (req, res) => {\\n  const index = items.findIndex(i => i.id === parseInt(req.params.id));\\n  if (index !== -1) {\\n    items.splice(index, 1);\\n    res.json({ deleted: true });\\n  } else {\\n    res.status(404).json({ error: 'Not found' });\\n  }\\n});\\n\\nexport default app;\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3001/api/judge/submit",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "judge", "submit"]
+        },
+        "description": "Submit a PASSING solution for Database Task 1 - In-Memory CRUD"
+      },
+      "response": []
+    },
+    {
+      "name": "Submit Code - URL Shortener Task 1 (Model) ✓ PASS",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"projectType\": \"urlShortener\",\n  \"taskId\": 1,\n  \"code\": \"import mongoose from 'mongoose';\\n\\nconst urlSchema = new mongoose.Schema({\\n  originalUrl: { type: String, required: true },\\n  shortCode: { type: String, required: true, unique: true, index: true },\\n  clicks: { type: Number, default: 0 },\\n  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },\\n  createdAt: { type: Date, default: Date.now },\\n  expiresAt: { type: Date }\\n});\\n\\nconst URL = mongoose.model('URL', urlSchema);\\n\\nexport default URL;\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3001/api/judge/submit",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "judge", "submit"]
+        },
+        "description": "Submit a PASSING solution for URL Shortener Task 1 - URL Model"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Submission by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3001/api/judge/submission/SUBMISSION_ID_HERE",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "judge", "submission", "SUBMISSION_ID_HERE"]
+        },
+        "description": "Get a specific submission by its ID (replace SUBMISSION_ID_HERE with actual ID from submit response)"
+      },
+      "response": []
+    },
+    {
+      "name": "Invalid Submission - Missing Fields",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"projectType\": \"basics\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:3001/api/judge/submit",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3001",
+          "path": ["api", "judge", "submit"]
+        },
+        "description": "Test error handling - missing required fields"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3001",
+      "type": "string"
+    }
+  ]
+}
