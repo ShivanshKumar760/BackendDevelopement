@@ -1,0 +1,184 @@
+{
+  "info": {
+    "name": "Todo API",
+    "_postman_id": "12345678-1234-1234-1234-123456789012",
+    "description": "Complete Todo API with MongoDB - All CRUD operations",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Welcome",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": [""]
+        },
+        "description": "Get welcome message from the API"
+      },
+      "response": []
+    },
+    {
+      "name": "Create Todo",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Buy groceries\",\n  \"completed\": false\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/todos",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["todos"]
+        },
+        "description": "Create a new todo item"
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Todos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/todos",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["todos"]
+        },
+        "description": "Retrieve all todo items from the database"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Todo by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/todos/:id",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["todos", ":id"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "65a1b2c3d4e5f6g7h8i9j0k1",
+              "description": "Todo ID (replace with actual ID)"
+            }
+          ]
+        },
+        "description": "Get a specific todo by its ID"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Todo",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Buy groceries and cook dinner\",\n  \"completed\": true\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/todos/:id",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["todos", ":id"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "65a1b2c3d4e5f6g7h8i9j0k1",
+              "description": "Todo ID (replace with actual ID)"
+            }
+          ]
+        },
+        "description": "Update an existing todo item"
+      },
+      "response": []
+    },
+    {
+      "name": "Update Todo - Mark Complete",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"completed\": true\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/todos/:id",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["todos", ":id"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "65a1b2c3d4e5f6g7h8i9j0k1",
+              "description": "Todo ID (replace with actual ID)"
+            }
+          ]
+        },
+        "description": "Mark todo as completed (partial update)"
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Todo",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/todos/:id",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["todos", ":id"],
+          "variable": [
+            {
+              "key": "id",
+              "value": "65a1b2c3d4e5f6g7h8i9j0k1",
+              "description": "Todo ID (replace with actual ID)"
+            }
+          ]
+        },
+        "description": "Delete a todo item by ID"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ]
+}
